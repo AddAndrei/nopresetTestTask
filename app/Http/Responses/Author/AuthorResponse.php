@@ -2,7 +2,6 @@
 
 namespace App\Http\Responses\Author;
 
-use App\Http\Responses\Book\BooksResponse;
 use App\Http\Responses\Response;
 use App\Models\Authors\Author;
 use Illuminate\Http\Request;
@@ -19,9 +18,7 @@ class AuthorResponse extends Response
         return [
             'id' => $this->getKey(),
             'name' => $this->name,
-            'books' => $this->relationLoaded('books')
-                ? BooksResponse::collection($this->books)
-                : null,
+            'books' => $this->getBooksCountAttribute(),
         ];
     }
 }

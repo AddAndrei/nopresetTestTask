@@ -2,11 +2,13 @@
 
 namespace App\Models\Books;
 
+use App\Http\DTO\FilterDTO;
 use App\Models\Authors\Author;
 use App\Models\BaseModel;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class Book

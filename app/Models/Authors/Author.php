@@ -37,8 +37,17 @@ class Author extends BaseModel
         'updated_at',
     ];
 
+    protected $appends = [
+        'booksCount',
+    ];
+
     public function books(): HasMany
     {
         return $this->hasMany(Book::class, 'author_id', 'id');
+    }
+
+    public function getBooksCountAttribute(): int
+    {
+        return $this->books()->count();
     }
 }

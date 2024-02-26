@@ -3,7 +3,7 @@
 use App\Http\Controllers\Attachmetns\ImageAttachmentController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\UserController;
-use App\Http\Controllers\Books\BooksController;
+use App\Http\Controllers\Books\BookController;
 use App\Http\Controllers\Hero\HeroController;
 use App\Http\Controllers\Maps\MapController;
 use App\Http\Controllers\Resources\ResourceController;
@@ -13,7 +13,7 @@ use App\Http\Controllers\Tiles\TileController;
 use App\Http\Controllers\Upload\ExcelController;
 use App\Http\Controllers\Upload\UploadController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Authors\AuthorController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,14 +31,24 @@ Route::get('/login', [AuthController::class, 'login']);
 Route::group(['middleware' => ['auth:sanctum', 'exception']], function(){
 
     //books
-    Route::delete('/books', [BooksController::class, 'destroy']);
-    Route::resource('/books', BooksController::class)
+    Route::delete('/books', [BookController::class, 'destroy']);
+    Route::resource('/books', BookController::class)
         ->only([
             'store',
             'index',
             'update',
             'show',
         ]);
+
+    //authors
+    Route::delete('/authors', [BookController::class, 'destroy']);
+    Route::resource('/authors', AuthorController::class)
+    ->only([
+        'store',
+        'index',
+        'update',
+        'show',
+    ]);
 
     Route::get('/user', [UserController::class, 'show']);
 
