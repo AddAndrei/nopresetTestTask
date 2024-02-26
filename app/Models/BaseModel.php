@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Exceptions\Attachments\EntityNotFoundException;
 use App\Http\DTO\DTO;
 use App\Http\DTO\FilterDTO;
 use Illuminate\Database\Eloquent\Builder;
@@ -30,7 +31,7 @@ class BaseModel extends Model
      */
     public function scopeFiltrate(Builder $builder, FilterDTO $DTO): Builder
     {
-        if($DTO->filter) {
+        if ($DTO->filter) {
             $filter = explode(':', $DTO->filter);
             return $builder->where("{$filter[0]}", $filter[1]);
         }
@@ -39,11 +40,14 @@ class BaseModel extends Model
 
     public function updateRelations(DTO $DTO, array $relations): void
     {
-        foreach($relations as $key => $relation) {
-            if($DTO->{$key}) {
-                if(is_null($DTO->{$key})) {
+        foreach ($relations as $key => $relation) {
+            if ($DTO->{$key}) {
+                if (is_null($DTO->{$key})) {
                     $this->{$relation['method']}()->dissociate();
-                }else{
+                } else {
+                    if (!$relation['entity']::find($DTO->{$key})) {
+                        throw new EntityNotFoundException("Not {$relation['entity']} with id:{$DTO->{$key}}");
+                    }
                     $relationEntity = $relation['entity']::find($DTO->{$key});
                     $this->{$relation['method']}()->associate($relationEntity);
                 }
