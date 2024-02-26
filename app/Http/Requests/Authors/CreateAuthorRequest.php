@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Authors;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FilterRequest extends FormRequest
+class CreateAuthorRequest extends FormRequest
 {
     public function validationData(): array
     {
         return $this->only(
             [
-                'author',
+                'name',
             ]
         );
     }
@@ -18,7 +18,7 @@ class FilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'author' => 'string|nullable',
+            'name' => 'string',
         ];
     }
 }
