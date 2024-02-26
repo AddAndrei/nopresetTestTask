@@ -3,6 +3,7 @@
 use App\Http\Controllers\Attachmetns\ImageAttachmentController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\Books\BooksController;
 use App\Http\Controllers\Hero\HeroController;
 use App\Http\Controllers\Maps\MapController;
 use App\Http\Controllers\Resources\ResourceController;
@@ -28,6 +29,16 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum', 'exception']], function(){
+
+    //books
+    Route::delete('/books', [BooksController::class, 'destroy']);
+    Route::resource('/books', BooksController::class)
+        ->only([
+            'store',
+            'index',
+            'update',
+            'show',
+        ]);
 
     Route::get('/user', [UserController::class, 'show']);
 
