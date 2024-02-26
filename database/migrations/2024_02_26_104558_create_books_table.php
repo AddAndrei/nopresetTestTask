@@ -13,10 +13,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('resources_types', function (Blueprint $table) {
+        Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->text('title');
-            $table->text('description');
+            $table->text('description')->nullable();
+            $table->string('title');
+            $table->unsignedBigInteger('author_id')->nullable();
+            $table->foreign('author_id')
+                ->references('id')
+                ->on('authors')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
             $table->timestamps();
         });
     }
@@ -28,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('resources_types');
+        Schema::dropIfExists('books');
     }
 };

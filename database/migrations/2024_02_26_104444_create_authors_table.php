@@ -13,14 +13,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tiles', function (Blueprint $table) {
+        Schema::create('authors', function (Blueprint $table) {
             $table->id();
-            $table->text('image');
-            $table->text('title');
-            $table->smallInteger('width');
-            $table->smallInteger('height');
-            $table->boolean('collision')->default(false);
-            $table->text('event')->nullable()->comment('дя вызова функции при коллизии');
+            $table->text('name');
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tiles');
+        Schema::dropIfExists('authors');
     }
 };
